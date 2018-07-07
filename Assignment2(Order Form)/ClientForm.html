@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Online Fruit order</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/normalize.css">
+		
+<script>
+<!--Javascript function to validate numbers input--!>
+function validationAndCalculate(f) {
+var re = /^[\d]*$/;
+if (!re.test(f.value)) {
+alert("Please Enter a valid input! Only numbers are allowed");
+f.value = f.value.replace(/[^\d]/g,"");
+MainActivity.totalCost.value="NaN";
+}
+else{
+	 var noOfApple=document.getElementById('appleQuantity').value;
+	 var noOfOrange=document.getElementById('orangeQuantity').value;
+	 var noOfBanana=document.getElementById('bananaQuantity').value;
+	 
+	 var costOfApple = noOfApple*0.69;
+	 var costOfOrange = noOfOrange*0.59;
+	 var costOfBanana = noOfBanana*0.39;
+	 
+	 var totalCost = costOfApple+costOfOrange+costOfBanana;
+	 totalCost = parseFloat(totalCost).toFixed(2);
+	 MainActivity.totalCost.value=totalCost;
+}
+}
+function disableBox() {
+     document.getElementById('totalCost').blur();
+}
+function validateNaN() {
+
+	var totalCost=document.forms["MainActivity"]["totalCost"].value;
+	var user_name=document.forms["MainActivity"]["user_name"].value;
+	var appleQuantity = document.forms["MainActivity"]["appleQuantity"].value;
+	var orangeQuantity=document.forms["MainActivity"]["orangeQuantity"].value;
+	var bananaQuantity=document.forms["MainActivity"]["bananaQuantity"].value;
+	var paymentMode = document.forms["MainActivity"]["paymentMode"].value;
+	
+	var errorMessage="Please enter:\n";
+	
+    if((totalCost==null || totalCost=="") || (user_name==null || user_name=="") || (paymentMode==null || paymentMode=="")){
+		
+		if((user_name==null || user_name=="")){
+		errorMessage += "User name\n";
+		}
+		
+		if((paymentMode==null || paymentMode=="")){
+		errorMessage += "Payment Mode\n";
+		}
+		if((totalCost==null || totalCost=="")){
+		errorMessage += "Total Cost\n";
+		}
+		errorMessage += "cannot be empty or invalid!"
+		
+		
+		
+	alert(errorMessage);
+	
+	
+	
+	
+	return false;
+	}
+}
+</script>
+
+
+ </head>
+ 
+    <body>
+
+      <form id="MainActivity" action="server.php" method="post">
+      
+        <h1>Order Form</h1>
+        
+        <fieldset>
+          <legend><span class="number">1</span>Your basic info</legend>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="user_name" onchange="validation()">              
+        </fieldset>
+        
+		<fieldset>
+		<legend><span class="number">2</span>Your Order</legend>
+        <table>
+		<tr>
+		<td style="width:50%;">
+           No. Of Apple (69&cent;) : &nbsp;
+		   </td>
+		   <td>
+		   <input id="appleQuantity" name="appleQuantity" style="width:75px;" onchange="validationAndCalculate(this)" >
+		   </td>
+		    </tr>
+			<tr>
+			<td style="width:40%;">
+		     No. Of Orange (59&cent;) : &nbsp;
+			</td>
+			<td>
+			<input id="orangeQuantity" name="orangeQuantity" style="width:75px;" onchange="validationAndCalculate(this)">
+			</td>
+			</tr>
+			<tr>
+			<td style="width:40%;">
+			   No. Of Banana (39&cent;) : &nbsp;
+			</td>
+			<td>
+			<input id="bananaQuantity" name="bananaQuantity" style="width:75px;" onchange="validationAndCalculate(this)">
+			</td>
+			</tr>
+			
+			<tr>
+			<td style="width:40%;">
+			  Total Cost (nearest &cent;) : &nbsp;
+			</td>
+			<td>
+			<input id="totalCost" name="totalCost" style="width:75px;" onfocus="disableBox()" value="" max="4">
+			</td>
+			</tr>
+			
+			
+        </table>
+        </fieldset>
+		
+        <fieldset>
+          <legend><span class="number">3</span>Your Payment Type</legend>
+		   <label>Payment Type</label>
+		  <table>
+		  <tr>
+		  <td>
+		   <input type="radio" id="Visa" value="Visa" name="paymentMode"><label for="paymentMode" class="light">Visa</label>
+		   </td>
+		   <td></td><td>&nbsp;</td><td>&nbsp;</td>
+		   <td>
+          <input type="radio" id="MasterCard" value="MasterCard" name="paymentMode"><label for="paymentMode" class="light">MasterCard</label>
+		  </td>
+		     <td></td><td></td><td></td>
+		  <td>
+          <input type="radio" id="Discover" value="Discover" name="paymentMode"><label for="paymentMode" class="light">Discover</label>
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="4"><img src="resource/visa.png" title="visaImage" style="width:90px;height:50px;"/>
+		  </td>
+		  <td colspan="4">	<img src="resource/mastercard.png" title="mastercardImage" style="width:90px;height:50px;"/></td>
+		  <td colspan="4">	<img src="resource/discover.jpg" title="discoverImage" style="width:90px;height:50px;"/></td>
+		  </tr>
+		  </table>
+	
+		 
+        </fieldset>
+        
+        <button type="submit" onclick="return validateNaN()">Proceed to checkout</button>
+      </form>
+      
+    </body>
+</html>
